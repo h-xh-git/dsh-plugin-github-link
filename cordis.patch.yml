@@ -1,0 +1,25 @@
+# dsh-plugin-github-link bundle patch.
+#
+# One host row. The browser half is declared separately, in package.json's
+# `dsh.client` manifest (see the `./client` export), and is loaded by the
+# client module loader because this row's package is present in the profile.
+#
+# A patch replaces the targeted row's whole `config`, so this is purely an
+# `insert` — no shipped row is overridden.
+#
+# Optional row config (both are never required, and both can also be set from
+# the plugin's own settings page):
+#
+#   config:
+#     clientId: Ov23li...            # public OAuth App id
+#     proxy: http://127.0.0.1:7890   # HTTP proxy for GitHub + git clone;
+#                                    # strongest of the three proxy sources,
+#                                    # ahead of the settings page and HTTPS_PROXY.
+- insert:
+    # Host half: Device Flow / PAT credential handling and GitHub REST access
+    # over same-origin HTTP routes under /github-link/*, plus `git clone` into
+    # a directory of a registered workspace. `inject = ['webServer']` in
+    # lib/index.js makes the webserver a hard dependency, so a headless profile
+    # with no HTTP server never loads this bundle.
+    - id: github-link
+      name: 'dsh-plugin-github-link'

@@ -1,0 +1,5 @@
+# 统一换行符，避免 Windows/Linux 贡献者之间产生 CRLF/LF 噪音
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
